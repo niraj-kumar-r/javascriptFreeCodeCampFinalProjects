@@ -107,9 +107,6 @@ function checkCashRegister(price, cash, cid) {
         return {
             status: "OPEN",
             change: changeArr,
-            changeDue,
-            valueGivenFinal,
-            totalCid,
         };
     }
 }
