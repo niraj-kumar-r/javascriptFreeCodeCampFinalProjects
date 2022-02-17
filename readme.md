@@ -4,6 +4,25 @@ This is a public repository for the solutions of the final projects given by [Fr
 
 ## Table of Contents
 
+-   [The Challenges](#the-challenges)
+
+    -   [The Cash Register](#the-cash-register)
+    -   [Palindrome Checker](#palindrome-checker)
+    -   [Roman Numeral Convertor](#roman-numeral-convertor)
+    -   [Caesars Cipher](#caesars-cipher)
+    -   [The Telephone Number Validator](#the-telephone-number-validator)
+
+-   [The Solutions](#the-solutions)
+
+    -   [The checkCashRegister function](#the-checkcashregister-function)
+    -   [The palindrome function](#the-palindrome-function)
+    -   [The convertToRoman function](#the-converttoroman-function)
+    -   [The rot13 function](#the-rot13-function)
+    -   [The telephoneCheck Function](#the-telephonecheck-function)
+
+-   [What I learned](#what-i-learned)
+-   [Author](#author)
+
 ## The Challenges
 
 ### The Cash Register
@@ -287,3 +306,13 @@ function telephoneCheck(str) {
 
 console.log(telephoneCheck("1(555) 555-5555"));
 ```
+
+## What I learned
+
+-   First of all, I learnt about why, you should probably stay away from floating point numbers if you can in javascript. They are fundamentaly inexact and should always be treated as approximations. Since javascript does not have a special primitive data type for float, it makes it extra headache inducing to work with floats natively in javascript.
+
+## Author
+
+-   Twitter - [@niraj_kumar_r](https://www.twitter.com/niraj_kumar_r)
+-   Linked In - [@niraj-kumar](https://www.linkedin.com/in/niraj-kumar-5323b0227/)
+-   My Certificate Link for this challenge - [See Certificate](https://www.freecodecamp.org/certification/fcc7debce30-f31b-46df-b64d-5dcb0cd35ef0/javascript-algorithms-and-data-structures)
