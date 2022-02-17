@@ -62,7 +62,7 @@ function checkCashRegister(price, cash, cid) {
     if (totalCid < changeDue) {
         return { status: "INSUFFICIENT_FUNDS", change: [] };
     } else if (changeDue === totalCid) {
-        return { status: "CLOSED", change: Cid };
+        return { status: "CLOSED", change: cid };
     }
     let changeCheck = changeDue;
     let changeArr = newCid.reverse().reduce((change, noteArr) => {
@@ -96,12 +96,12 @@ function checkCashRegister(price, cash, cid) {
     if (changeDue - valueGivenFinal > 0) {
         changeDue = (cash - price) / 100;
         return {
-            status: "CLOSED",
+            status: "INSUFFICIENT_FUNDS",
             change: [],
-            changeArr,
-            changeDue,
-            valueGivenFinal,
-            totalCid,
+            // changeArr,
+            // changeDue,
+            // valueGivenFinal,
+            // totalCid,
         };
     } else {
         changeDue /= 100;
@@ -109,9 +109,9 @@ function checkCashRegister(price, cash, cid) {
         return {
             status: "OPEN",
             change: changeArr,
-            changeDue,
-            valueGivenFinal,
-            totalCid,
+            // changeDue,
+            // valueGivenFinal,
+            // totalCid,
         };
     }
 }
@@ -144,3 +144,47 @@ console.log(
 );
 
 // should return {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]}
+
+console.log(
+    checkCashRegister(19.5, 20, [
+        ["PENNY", 0.01],
+        ["NICKEL", 0],
+        ["DIME", 0],
+        ["QUARTER", 0],
+        ["ONE", 1],
+        ["FIVE", 0],
+        ["TEN", 0],
+        ["TWENTY", 0],
+        ["ONE HUNDRED", 0],
+    ])
+);
+
+console.log(
+    checkCashRegister(19.5, 20, [
+        ["PENNY", 0.5],
+        ["NICKEL", 0],
+        ["DIME", 0],
+        ["QUARTER", 0],
+        ["ONE", 0],
+        ["FIVE", 0],
+        ["TEN", 0],
+        ["TWENTY", 0],
+        ["ONE HUNDRED", 0],
+    ])
+);
+
+console.log(
+    checkCashRegister(3.26, 100, [
+        ["PENNY", 1.01],
+        ["NICKEL", 2.05],
+        ["DIME", 3.1],
+        ["QUARTER", 4.25],
+        ["ONE", 90],
+        ["FIVE", 55],
+        ["TEN", 20],
+        ["TWENTY", 60],
+        ["ONE HUNDRED", 100],
+    ])
+);
+
+//should return {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]}
