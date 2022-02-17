@@ -18,3 +18,4 @@ function palindrome(str) {
   return newStr.split("").reverse().join("") === newStr ? true : false;
 }
 console.log(palindrome("2A3*3a2"));
+console.log(palindrome("not a palindrome"));
