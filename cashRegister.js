@@ -36,7 +36,7 @@
 // ]
 
 function checkCashRegister(price, cash, cid) {
-    let change = cash - price;
+    let changeDue = cash - price;
     let valueArr = {
         PENNY: 0.01,
         NICKEL: 0.05,
@@ -48,10 +48,33 @@ function checkCashRegister(price, cash, cid) {
         TWENTY: 20,
         "ONE HUNDRED": 100,
     };
-    if (cid.reduce((totalCash, value) => totalCash + value[1], 0) < change) {
+    const totalCid = cid.reduce((totalCash, value) => totalCash + value[1], 0);
+
+    if (totalCid < changeDue) {
         return { status: "INSUFFICIENT_FUNDS", change: [] };
     }
-    return change;
+    let changeCheck = changeDue;
+    let changeArr = cid
+        .reverse()
+        .reduce((change, noteArr) => {
+            if (valueArr[noteArr[0]] <= changeCheck && noteArr[1] !== 0) {
+                i = 1;
+                valueGiven = valueArr[noteArr[0]];
+
+                while (valueGiven < changeCheck && valueGiven < noteArr[1]) {
+                    i += 1;
+                    valueGiven *= i;
+                }
+                i -= 1;
+                valueGiven -= valueArr[noteArr[0]];
+
+                change.push([noteArr[0], valueGiven]);
+                changeCheck -= valueGiven;
+            }
+            return change;
+        }, [])
+        .reverse();
+    return changeArr;
 }
 
 console.log(
