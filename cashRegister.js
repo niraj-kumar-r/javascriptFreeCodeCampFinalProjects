@@ -58,18 +58,20 @@ function checkCashRegister(price, cash, cid) {
         .reverse()
         .reduce((change, noteArr) => {
             if (valueArr[noteArr[0]] <= changeCheck && noteArr[1] !== 0) {
-                i = 1;
-                valueGiven = valueArr[noteArr[0]];
+                let i = 0;
+                let valueGiven = 0;
 
-                while (valueGiven < changeCheck && valueGiven < noteArr[1]) {
+                while (true) {
                     i += 1;
-                    valueGiven *= i;
+                    valueGiven = valueArr[noteArr[0]] * i;
+                    if (valueGiven > changeCheck || valueGiven > noteArr[1]) {
+                        break;
+                    }
                 }
                 i -= 1;
-                valueGiven -= valueArr[noteArr[0]];
-
-                change.push([noteArr[0], valueGiven]);
+                valueGiven = valueArr[noteArr[0]] * i;
                 changeCheck -= valueGiven;
+                change.push([noteArr[0], valueGiven]);
             }
             return change;
         }, [])
@@ -78,7 +80,7 @@ function checkCashRegister(price, cash, cid) {
 }
 
 console.log(
-    checkCashRegister(19.5, 20, [
+    checkCashRegister(19.5, 47, [
         ["PENNY", 1.01],
         ["NICKEL", 2.05],
         ["DIME", 3.1],
