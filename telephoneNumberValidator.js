@@ -20,6 +20,8 @@ function telephoneCheck(str) {
         } else {
             return telephoneCheck(str.slice(1));
         }
+    } else if (/[^\d\(\)\-]/.test(str)) {
+        return false;
     }
 }
 
