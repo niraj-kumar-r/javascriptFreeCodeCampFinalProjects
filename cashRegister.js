@@ -36,7 +36,8 @@
 // ]
 
 function checkCashRegister(price, cash, cid) {
-    let changeDue = cash - price;
+    let newCid = cid.slice();
+    let changeDue = cash * 100 - price * 100;
     let valueArr = {
         PENNY: 0.01,
         NICKEL: 0.05,
@@ -48,49 +49,63 @@ function checkCashRegister(price, cash, cid) {
         TWENTY: 20,
         "ONE HUNDRED": 100,
     };
-    const totalCid = cid.reduce((totalCash, value) => totalCash + value[1], 0);
+    for (let c of Object.keys(valueArr)) {
+        valueArr[c] *= 100;
+    }
+    newCid = newCid.map((a) => [a[0], Math.round(a[1] * 100)]);
+
+    const totalCid = newCid.reduce(
+        (totalCash, value) => totalCash + value[1],
+        0
+    );
 
     if (totalCid < changeDue) {
         return { status: "INSUFFICIENT_FUNDS", change: [] };
     } else if (changeDue === totalCid) {
-        return { status: "CLOSED", change: cid };
+        return { status: "CLOSED", change: Cid };
     }
     let changeCheck = changeDue;
-    let changeArr = cid
-        .reverse()
-        .reduce((change, noteArr) => {
-            if (valueArr[noteArr[0]] <= changeCheck && noteArr[1] !== 0) {
-                let i = 0;
-                let valueGiven = 0;
+    let changeArr = newCid.reverse().reduce((change, noteArr) => {
+        if (valueArr[noteArr[0]] <= changeCheck && noteArr[1] !== 0) {
+            let i = 0;
+            let valueGiven = 0;
 
-                while (true) {
-                    i += 1;
-                    valueGiven = valueArr[noteArr[0]] * i;
-                    if (valueGiven > changeCheck || valueGiven > noteArr[1]) {
-                        break;
-                    }
-                }
-                i -= 1;
+            while (true) {
+                i += 1;
                 valueGiven = valueArr[noteArr[0]] * i;
-                changeCheck -= valueGiven;
-                change.push([noteArr[0], valueGiven]);
+                if (valueGiven > changeCheck || valueGiven > noteArr[1]) {
+                    break;
+                }
             }
-            return change;
-        }, [])
-        .reverse();
+            i -= 1;
+            valueGiven = valueArr[noteArr[0]] * i;
+            changeCheck -= valueGiven;
+            change.push([noteArr[0], valueGiven]);
+        }
+        return change;
+    }, []);
     let valueGivenFinal = changeArr.reduce(
         (sum, noteArr) => sum + noteArr[1],
         0
     );
+    for (let c of Object.keys(valueArr)) {
+        valueArr[c] /= 100;
+    }
+    newCid = newCid.map((a) => [a[0], Math.round(a[1] / 100)]);
+    changeArr = changeArr.map((a) => [a[0], a[1] / 100]);
     if (changeDue - valueGivenFinal > 0) {
+        changeDue = (cash - price) / 100;
         return {
             status: "CLOSED",
             change: [],
+            changeArr,
             changeDue,
             valueGivenFinal,
             totalCid,
         };
     } else {
+        changeDue /= 100;
+        valueGivenFinal /= 100;
         return {
             status: "OPEN",
             change: changeArr,
@@ -100,7 +115,6 @@ function checkCashRegister(price, cash, cid) {
         };
     }
 }
-
 console.log(
     checkCashRegister(15.3, 68, [
         ["PENNY", 1.01],
