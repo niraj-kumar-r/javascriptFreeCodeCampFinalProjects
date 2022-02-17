@@ -48,6 +48,9 @@ function checkCashRegister(price, cash, cid) {
         TWENTY: 20,
         "ONE HUNDRED": 100,
     };
+    if (cid.reduce((totalCash, value) => totalCash + value[1], 0) < change) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+    }
     return change;
 }
 
