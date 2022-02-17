@@ -49,6 +49,8 @@ function telephoneCheck(str) {
                 "(555) 555-5555",
                 "1 (555)555-5555",
                 "1 (555) 555-5555",
+                "1(555)555-5555",
+                "1(555) 555-5555",
             ],
         },
         {
@@ -61,4 +63,4 @@ function telephoneCheck(str) {
     return regArr.some((reg) => (reg["reg"].test(str) ? true : false));
 }
 
-console.log(telephoneCheck("1 555 555 5555"));
+console.log(telephoneCheck("1(555) 555-5555"));
