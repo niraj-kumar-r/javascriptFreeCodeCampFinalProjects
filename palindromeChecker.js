@@ -12,7 +12,7 @@
 function palindrome(str) {
   let newStr = str
     .split("")
-    .filter((a) => /\w/.test(a))
+    .filter((a) => /[A-Za-z0-9]/.test(a))
     .join("")
     .toLowerCase();
   return newStr.split("").reverse().join("") === newStr ? true : false;
