@@ -52,6 +52,8 @@ function checkCashRegister(price, cash, cid) {
 
     if (totalCid < changeDue) {
         return { status: "INSUFFICIENT_FUNDS", change: [] };
+    } else if (changeDue === totalCid) {
+        return { status: "CLOSED", change: cid };
     }
     let changeCheck = changeDue;
     let changeArr = cid
@@ -76,11 +78,19 @@ function checkCashRegister(price, cash, cid) {
             return change;
         }, [])
         .reverse();
-    return changeArr;
+    let valueGivenFinal = changeArr.reduce(
+        (sum, noteArr) => sum + noteArr[1],
+        0
+    );
+    if (changeDue - valueGivenFinal > 0) {
+        return { status: "INSUFFICIENT_FUNDS", change: [] };
+    } else {
+        return { status: "OPEN", change: changeArr };
+    }
 }
 
 console.log(
-    checkCashRegister(19.5, 47, [
+    checkCashRegister(15.3, 68, [
         ["PENNY", 1.01],
         ["NICKEL", 2.05],
         ["DIME", 3.1],
