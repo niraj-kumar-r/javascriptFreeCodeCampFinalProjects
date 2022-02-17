@@ -15,6 +15,10 @@ function telephoneCheck(str) {
     if (/^\d\s|^\d\(/.test(str)) {
         if (str[0] !== "1") {
             return false;
+        } else if (/^\d\s/.test(str)) {
+            return telephoneCheck(str.slice(2));
+        } else {
+            return telephoneCheck(str.slice(1));
         }
     }
 }
