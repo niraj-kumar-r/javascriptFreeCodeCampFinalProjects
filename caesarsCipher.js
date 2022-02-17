@@ -8,7 +8,17 @@
 // All letters will be uppercase. Do not transform any non-alphabetic character (i.e. spaces, punctuation), but do pass them on.
 
 function rot13(str) {
-  return str;
+  return str
+    .toUpperCase()
+    .split("")
+    .map((a) => {
+      return !/[A-Za-z]/.test(a)
+        ? a
+        : a > "M"
+        ? String.fromCharCode(a.charCodeAt(0) - 13)
+        : String.fromCharCode(a.charCodeAt(0) - 13 + 26);
+    })
+    .join("");
 }
 
-rot13("SERR PBQR PNZC");
+console.log(rot13("SERR PBQR PNZC"));
