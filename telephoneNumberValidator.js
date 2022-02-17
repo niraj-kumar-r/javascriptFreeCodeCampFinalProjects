@@ -37,9 +37,13 @@
 // }
 
 function telephoneCheck(str) {
-    let reg = /^\d{3}-\d{3}-\d{4}$|^\(\d{3}\)\d{3}-\d{4}$/;
+    let regArr = [
+        /^\d{3}-\d{3}-\d{4}$/, //"555-555-5555"
+        /^\(\d{3}\)\d{3}-\d{4}$/, //"(555)555-5555"
+        /^\(\d{3}\) \d{3}-\d{4}$/, //"(555) 555-5555"
+    ];
 
-    return reg.test(str) ? true : false;
+    return regArr.some((reg) => (reg.test(str) ? true : false));
 }
 
-console.log(telephoneCheck("(555)555-5555"));
+console.log(telephoneCheck("555-555-5555"));
