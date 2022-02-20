@@ -316,5 +316,5 @@ console.log(telephoneCheck("1(555) 555-5555"));
 ## Author
 
 -   Twitter - [@niraj_kumar_r](https://www.twitter.com/niraj_kumar_r)
--   Linked In - [@niraj-kumar](https://www.linkedin.com/in/niraj-kumar-5323b0227/)
+-   Linked In - [@niraj-kumar](https://www.linkedin.com/in/niraj-kumar-r/)
 -   My Certificate Link for this challenge - [See Certificate](https://www.freecodecamp.org/certification/fcc7debce30-f31b-46df-b64d-5dcb0cd35ef0/javascript-algorithms-and-data-structures)
